@@ -66,7 +66,7 @@ export const DeterminatingText: FC<DeterminatingTextProps> = ({
   }, [level, inView])
 
   return (
-    <StyledText as={as} ref={iRef} className={className} style={style}>
+    <StyledText ref={iRef} className={className} style={style} as={as}>
       {isServer || level === 20 || children === '' ? children : determiantion}
     </StyledText>
   )
