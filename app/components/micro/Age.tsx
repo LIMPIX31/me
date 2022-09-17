@@ -11,13 +11,18 @@ const AgeStyled = styled.div`
   translate: 0 -50%;
   font-weight: 900;
   font-family: Cartographer, sans-serif;
-  background: ${theme.secondary('45deg')};
+  background: ${theme.front};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 30rem;
   line-height: 40rem;
-  opacity: 0.2;
+  opacity: 0.1;
   user-select: none;
+  @media screen and (max-width: 640px) {
+    left: 50%;
+    top: 100%;
+    translate: -50% -50%;
+  }
 `
 
 const birthDate = new Date('2006-06-01').getFullYear()
@@ -31,5 +36,5 @@ export const Age: FC<Styled> = ({ className }) => {
     if (counter < age) setTimeout(() => setCounter(increment), 100 / (counter / 10))
   }, [counter])
 
-  return <AgeStyled>{counter}</AgeStyled>
+  return <AgeStyled className={className}>{counter}</AgeStyled>
 }

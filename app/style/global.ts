@@ -105,9 +105,15 @@ export const Styles = createGlobalStyle`
     position: relative;
     z-index: 1;
     overflow-x: hidden;
+    font-size: 16px;
     @media screen and (max-width: 760px) {
       font-size: 10px;
     }
+  }
+  
+  body {
+    padding-bottom: 40px;
+    box-sizing: content-box;
   }
   
   *::selection {

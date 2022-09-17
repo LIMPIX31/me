@@ -25,5 +25,5 @@ export interface Styled {
 }
 
 export interface As {
-  as?: never
+  as?: never | string
 }

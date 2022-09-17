@@ -4,6 +4,7 @@ import { As, HasChildren, Styled } from '~/utils/props'
 import { useIntersection } from 'react-use'
 import { chance, increment, randomItem } from '~/utils'
 import { theme } from '~/style/theme'
+import { useIsServer } from '~/hooks/useIsServer'
 
 const deterholders = '!@#$%^&*()-=+~\\|/?:{}[]'
 
@@ -18,16 +19,29 @@ export interface DeterminatingTextProps extends Required<HasChildren<string>>, A
   gradient?: boolean
 }
 
-export const DeterminatingText: FC<DeterminatingTextProps> = ({ children, gradient, as, className }) => {
+export const DeterminatingText: FC<DeterminatingTextProps> = ({
+  children,
+  style,
+  as,
+  className,
+}) => {
+  const isServer = useIsServer()
+
   const [level, setLevel] = useState(0)
   const determiantion = useMemo(
     () =>
       children
-        .split('')
-        .map(v =>
-          chance(level / 20) ? v : chance(0.5) ? v.toUpperCase() : randomItem(deterholders),
+        ?.split?.('')
+        ?.map?.(v =>
+          v !== ' '
+            ? chance(level / 20)
+              ? v
+              : chance(0.7)
+              ? v.toUpperCase()
+              : randomItem(deterholders)
+            : v,
         )
-        .join(''),
+        ?.join?.(''),
     [level],
   )
 
@@ -41,17 +55,17 @@ export const DeterminatingText: FC<DeterminatingTextProps> = ({ children, gradie
   const [inView, setInView] = useState(false)
 
   useEffect(() => {
-    const value = !!(iRaw && iRaw.intersectionRatio >= 1)
+    const value = !!(iRaw && iRaw.isIntersecting)
     if (value !== inView) setInView(value)
   }, [iRaw])
 
   useEffect(() => {
-    if (level < 20 && inView) setTimeout(() => setLevel(increment), 10)
+    if (level < 20 && inView && !isServer) setTimeout(() => setLevel(increment), 30)
   }, [level, inView])
 
   return (
-    <StyledText as={as} ref={iRef} className={className}>
-      {determiantion}
+    <StyledText as={as} ref={iRef} className={className} style={style}>
+      {isServer ? children : determiantion}
     </StyledText>
   )
 }
