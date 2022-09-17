@@ -498,7 +498,7 @@ export default function Home() {
           </Exp>
           <Exp>
             <ExpValue style={{ backgroundColor: '#888888' }}>6</ExpValue>
-            <ExpDesc>Month in commercial development</ExpDesc>
+            <ExpDesc>Monthes in commercial development</ExpDesc>
           </Exp>
         </Content>
       </Experience>
