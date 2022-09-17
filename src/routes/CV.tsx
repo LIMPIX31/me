@@ -450,7 +450,7 @@ const ColoredLink = styled.a<{ color: string }>`
   }
 `
 
-export default function Home() {
+export default function CV() {
   return (
     <Page>
       {/*<Header />*/}
