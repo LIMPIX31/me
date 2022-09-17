@@ -43,7 +43,7 @@ const ShortInfo = styled.div`
     'photo fullname';
   align-items: center;
   position: relative;
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 960px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -134,7 +134,6 @@ const AboutText = styled(DeterminatingText)`
 
 const Experience = styled.section`
   width: 100%;
-  height: 9rem;
   position: relative;
   margin-bottom: 5rem;
   background: ${mix(0.05, 'black', theme.back)};
@@ -143,8 +142,11 @@ const Experience = styled.section`
   ${Content} {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 1rem 0 3rem 0;
     align-items: center;
     height: 100%;
+    gap: 2rem 0;
   }
 
   &:before,
@@ -171,9 +173,9 @@ const Exp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
   height: 100%;
-  min-width: 13rem;
+  position: relative;
+  min-width: 20rem;
 `
 
 const ExpValue = styled(DeterminatingText)`
@@ -183,6 +185,11 @@ const ExpValue = styled(DeterminatingText)`
 `
 
 const ExpDesc = styled(DeterminatingText)`
+  position: absolute;
+  white-space: nowrap;
+  left: 50%;
+  translate: -50%;
+  bottom: -1.5rem;
   font-weight: 300;
   opacity: 0.5;
   text-align: center;
@@ -217,7 +224,7 @@ const LanguageUsed = styled.div<{ color: string; garea: string }>`
   grid-area: ${({ garea }) => garea};
   background-color: ${({ color }) => color};
   box-shadow: 0 0 50px 1px ${({ color }) => rgba(color, 0.3)};
-  @media screen and (max-width: 750px) {
+  @media screen and (max-width: 960px) {
     flex-direction: column;
     justify-content: space-between;
     gap: 0;
@@ -255,7 +262,7 @@ const StackColumns = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 3rem;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 960px) {
     align-items: center;
     justify-content: center;
   }
@@ -264,7 +271,7 @@ const StackColumns = styled.div`
 const StackSection = styled.div`
   display: flex;
   flex-direction: column;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 960px) {
     align-items: center;
     justify-content: center;
     li {
@@ -290,7 +297,7 @@ const StackList = styled.ul`
     height: 100%;
     width: 2px;
     background: ${theme.primary()};
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 960px) {
       display: none;
     }
   }
@@ -420,11 +427,10 @@ const TopPackages: FC = () => {
 
 const Links = styled.section`
   display: inline-flex;
-  max-width: 300px;
   flex-direction: column;
   gap: 10px;
   font-size: 2rem;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 960px) {
     width: 100%;
     align-items: center;
   }
@@ -432,7 +438,7 @@ const Links = styled.section`
 
 const ColoredLink = styled.a<{ color: string }>`
   color: ${({ color }) => color};
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 12px;
   font-size: 1.6rem;
