@@ -21,16 +21,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src",
-    "types": [
-      "jest",
-      "@testing-library/jest-dom",
-    ]
+    "baseUrl": "src"
   },
-  "include": [
-    "src",
-    "./src/setupTests.ts"
-  ],
+  "include": ["src"],
   "references": [
     {
       "path": "./tsconfig.node.json"
