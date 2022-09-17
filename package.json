@@ -1,6 +1,6 @@
 {
+  "name": "limpix31",
   "private": true,
-  "sideEffects": false,
   "scripts": {
     "build": "tsc && vite build",
     "dev": "vite"
