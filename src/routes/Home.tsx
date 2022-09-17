@@ -419,18 +419,20 @@ const TopPackages: FC = () => {
 }
 
 const Links = styled.section`
-  display: flex;
+  display: inline-flex;
+  max-width: 300px;
   flex-direction: column;
   gap: 10px;
   font-size: 2rem;
   @media screen and (max-width: 700px) {
+    width: 100%;
     align-items: center;
   }
 `
 
 const ColoredLink = styled.a<{ color: string }>`
   color: ${({ color }) => color};
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
   font-size: 1.6rem;
@@ -558,7 +560,7 @@ export default function Home() {
       </StackWrapper>
       <TopPackagesWrapper>
         <Content>
-          <Title>Most used packages</Title>
+          <Title>Top 5 packages</Title>
           <TopPackages />
         </Content>
       </TopPackagesWrapper>
