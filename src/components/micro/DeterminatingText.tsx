@@ -27,7 +27,7 @@ export const DeterminatingText: FC<DeterminatingTextProps> = ({
 }) => {
   const isServer = useIsServer()
 
-  const value = Array.isArray(children) ? children.join('') : children
+  const value = String(Array.isArray(children) ? children.join('') : children)
 
   const [level, setLevel] = useState(0)
   const determiantion = useMemo(

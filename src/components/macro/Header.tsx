@@ -53,11 +53,11 @@ const Nav = styled.nav`
 
 const NavItem = styled(NavLink)`
   height: 100%;
-  padding: 0 2rem;
+  width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
   line-height: 1.5rem;
   font-family: Cartographer, sans-serif;
   font-weight: 300;

@@ -113,7 +113,7 @@ export const Styles = createGlobalStyle`
   
   body {
     padding-bottom: 40px;
-    box-sizing: content-box;
+    box-sizing: border-box;
   }
   
   *::selection {
