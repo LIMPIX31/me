@@ -9,6 +9,14 @@ import ts_logo from '~/assets/images/ts-logo-round-256.svg'
 import kotlin_logo from '~/assets/images/kotlin_logo.svg'
 import rust_logo from '~/assets/images/rust_logo.png'
 import back1 from '~/assets/images/back1.svg'
+import { Header } from '~/components/macro/Header'
+import photo from '~/assets/images/photo.png'
+import { FC, useMemo } from 'react'
+import { useMostUsedPackages } from '~/hooks/useMostUsedPackages'
+import { map } from '~/utils'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCrown, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faDiscord, faGithub, faVk } from '@fortawesome/free-brands-svg-icons'
 
 const Page = styled.div`
   width: 100%;
@@ -19,7 +27,12 @@ const Page = styled.div`
 
 const Overview = styled.section`
   width: 100%;
-  height: 500px;
+  min-height: 500px;
+  ${Content} {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
 `
 
 const ShortInfo = styled.div`
@@ -160,7 +173,7 @@ const Exp = styled.div`
   align-items: center;
   justify-content: space-evenly;
   height: 100%;
-  mix-width: 13rem;
+  min-width: 13rem;
 `
 
 const ExpValue = styled(DeterminatingText)`
@@ -226,9 +239,214 @@ const LanguageUsed = styled.div<{ color: string; garea: string }>`
   }
 `
 
+const StackWrapper = styled.section`
+  margin-top: 10rem;
+  ${Content} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+`
+
+const StackColumns = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3rem;
+  @media screen and (max-width: 700px) {
+    align-items: center;
+    justify-content: center;
+  }
+`
+
+const StackSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media screen and (max-width: 700px) {
+    align-items: center;
+    justify-content: center;
+    li {
+      text-align: center;
+    }
+  }
+`
+
+const StackSectionTitle = styled(DeterminatingText)`
+  background: ${theme.primary('45deg')};
+  font-size: 3rem;
+`
+
+const StackList = styled.ul`
+  margin-top: 1rem;
+  position: relative;
+  &:before {
+    position: absolute;
+    content: '';
+    display: block;
+    left: -1rem;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: ${theme.primary()};
+    @media screen and (max-width: 700px) {
+      display: none;
+    }
+  }
+  li {
+    font-size: 2rem;
+    &:before {
+      content: '* ';
+      background: ${theme.secondary('45deg')};
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 30px #f42e2e);
+    }
+  }
+`
+
+const TopPackagesWrapper = styled.section`
+  margin-top: 10rem;
+  ${Content} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+`
+
+type PackageStats = {
+  count: number
+  related: number
+  name: string
+}
+
+const PackagesList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+const StyledUserPackage = styled.li<{ progress: number }>`
+  display: flex;
+  gap: 24px;
+  position: relative;
+  align-items: center;
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    width: ${({ progress }) => progress + '%'};
+    background: ${theme.primary('90deg')};
+    background-attachment: fixed;
+  }
+
+  &:after {
+    filter: grayscale(100%);
+    opacity: 0.3;
+    width: 100%;
+  }
+`
+
+const PackageCrown = styled.div<{ value: number }>`
+  font-size: 3rem;
+  color: ${({ value }) => {
+    switch (value) {
+      case 0:
+        return '#fac059'
+      case 1:
+        return '#eeeeee'
+      case 2:
+        return '#8d4700'
+      default:
+        return 'transparent'
+    }
+  }};
+`
+
+const PackageName = styled(DeterminatingText)`
+  font-size: 2rem;
+`
+
+const PackageSuffix = styled(DeterminatingText)`
+  font-size: 2rem;
+  background-color: ${mix(0.2, theme.front, theme.back)};
+`
+
+const UsedPackage: FC<{ pkg: PackageStats; index: number }> = ({ pkg, index }) => {
+  return (
+    <StyledUserPackage progress={pkg.related}>
+      <PackageCrown value={index}>
+        <FontAwesomeIcon icon={faCrown} />
+      </PackageCrown>
+      <PackageName>{pkg.name}</PackageName>
+      <PackageSuffix>[{pkg.count}]</PackageSuffix>
+    </StyledUserPackage>
+  )
+}
+
+const TopPackages: FC = () => {
+  const [data, loading, error] = useMostUsedPackages()
+
+  const top = useMemo(() => {
+    if (!data) return []
+    const max = Math.max(...Object.values(data))
+    return Object.entries(data)
+      .filter(([key]) => !key.includes('@types'))
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 5)
+      .map(([key, value]) => ({
+        count: value,
+        related: map(+value, 0, max),
+        name: key,
+      })) as PackageStats[]
+  }, [data])
+
+  return !data ? (
+    <DeterminatingText>Loading...</DeterminatingText>
+  ) : (
+    <PackagesList>
+      {top.map((v, i) => (
+        <UsedPackage pkg={v} index={i} key={v.name} />
+      ))}
+    </PackagesList>
+  )
+}
+
+const Links = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 2rem;
+  @media screen and (max-width: 700px) {
+    align-items: center;
+  }
+`
+
+const ColoredLink = styled.a<{ color: string }>`
+  color: ${({ color }) => color};
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+  span {
+    background-color: ${({ color }) => color};
+  }
+`
+
 export default function Index() {
   return (
     <Page>
+      {/*<Header />*/}
       <Overview>
         {/*<OverBlurred>*/}
         {/*  <GlowBlock1 />*/}
@@ -236,12 +454,29 @@ export default function Index() {
         {/*</OverBlurred>*/}
         <Content>
           <ShortInfo>
-            <Photo />
+            <Photo src={photo} />
             <Nickname>LIMPIX31</Nickname>
             <Fullname>Danil Karpenko</Fullname>
             <Age />
           </ShortInfo>
-          <div />
+          <Links>
+            <ColoredLink color={'#d8c7ff'} href={'mailto://limpix31@gmail.com'}>
+              <FontAwesomeIcon icon={faEnvelope} />
+              <DeterminatingText as={'span'}>limpix31@gmail.com</DeterminatingText>
+            </ColoredLink>
+            <ColoredLink color={'#a9fff4'} href={'https://github.com/LIMPIX31'}>
+              <FontAwesomeIcon icon={faGithub} />
+              <DeterminatingText as={'span'}>LIMPIX31</DeterminatingText>
+            </ColoredLink>
+            <ColoredLink color={'#ffe7a9'} href={'https://discord.gg/75uYTryUu8'}>
+              <FontAwesomeIcon icon={faDiscord} />
+              <DeterminatingText as={'span'}>LIMPIX31#9144</DeterminatingText>
+            </ColoredLink>
+            <ColoredLink color={'#ffa9ca'} href={'https://vk.ru/limpix31'}>
+              <FontAwesomeIcon icon={faVk} />
+              <DeterminatingText as={'span'}>Danil Karpenko</DeterminatingText>
+            </ColoredLink>
+          </Links>
         </Content>
       </Overview>
       <Experience>
@@ -255,8 +490,8 @@ export default function Index() {
             <ExpDesc>Years in Web dev</ExpDesc>
           </Exp>
           <Exp>
-            <ExpValue style={{ backgroundColor: '#f42e2e' }}>0</ExpValue>
-            <ExpDesc>Years in commercial development</ExpDesc>
+            <ExpValue style={{ backgroundColor: '#888888' }}>6</ExpValue>
+            <ExpDesc>Month in commercial development</ExpDesc>
           </Exp>
         </Content>
       </Experience>
@@ -292,6 +527,41 @@ export default function Index() {
           </MostUsedGrid>
         </Content>
       </MostUsed>
+      <StackWrapper>
+        <Content>
+          <Title>I&apos;m FullStack</Title>
+          <StackColumns>
+            <StackSection>
+              <StackSectionTitle>Front</StackSectionTitle>
+              <StackList>
+                <DeterminatingText as={'li'}>TypeScript 4.8</DeterminatingText>
+                <DeterminatingText as={'li'}>React 18</DeterminatingText>
+                <DeterminatingText as={'li'}>MobX 6</DeterminatingText>
+                <DeterminatingText as={'li'}>Redux Toolkit</DeterminatingText>
+                <DeterminatingText as={'li'}>Styled Components</DeterminatingText>
+                <DeterminatingText as={'li'}>Jest + testing-library</DeterminatingText>
+              </StackList>
+            </StackSection>
+            <StackSection>
+              <StackSectionTitle>Back</StackSectionTitle>
+              <StackList>
+                <DeterminatingText as={'li'}>NodeJS 18</DeterminatingText>
+                <DeterminatingText as={'li'}>Express</DeterminatingText>
+                <DeterminatingText as={'li'}>Nest</DeterminatingText>
+                <DeterminatingText as={'li'}>MongoDB</DeterminatingText>
+                <DeterminatingText as={'li'}>Docker</DeterminatingText>
+                <DeterminatingText as={'li'}>Nginx</DeterminatingText>
+              </StackList>
+            </StackSection>
+          </StackColumns>
+        </Content>
+      </StackWrapper>
+      <TopPackagesWrapper>
+        <Content>
+          <Title>Most used packages</Title>
+          <TopPackages />
+        </Content>
+      </TopPackagesWrapper>
     </Page>
   )
 }

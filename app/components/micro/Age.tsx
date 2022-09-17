@@ -18,6 +18,7 @@ const AgeStyled = styled.div`
   line-height: 40rem;
   opacity: 0.1;
   user-select: none;
+  z-index: -1;
   @media screen and (max-width: 640px) {
     left: 50%;
     top: 100%;

@@ -15,7 +15,7 @@ export const StyledText = styled.div`
   -webkit-text-fill-color: transparent;
 `
 
-export interface DeterminatingTextProps extends Required<HasChildren<string>>, As, Styled {
+export interface DeterminatingTextProps extends Required<HasChildren>, As, Styled {
   gradient?: boolean
 }
 
@@ -27,12 +27,14 @@ export const DeterminatingText: FC<DeterminatingTextProps> = ({
 }) => {
   const isServer = useIsServer()
 
+  const value = Array.isArray(children) ? children.join('') : children
+
   const [level, setLevel] = useState(0)
   const determiantion = useMemo(
     () =>
-      children
+      value
         ?.split?.('')
-        ?.map?.(v =>
+        ?.map?.((v: any) =>
           v !== ' '
             ? chance(level / 20)
               ? v
@@ -65,7 +67,7 @@ export const DeterminatingText: FC<DeterminatingTextProps> = ({
 
   return (
     <StyledText as={as} ref={iRef} className={className} style={style}>
-      {isServer ? children : determiantion}
+      {isServer || level === 20 || children === '' ? children : determiantion}
     </StyledText>
   )
 }

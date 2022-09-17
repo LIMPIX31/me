@@ -12,9 +12,7 @@ export default function handleRequest(
   const sheet = new ServerStyleSheet()
 
   let markup = renderToString(
-    sheet.collectStyles(
-      <RemixServer context={remixContext} url={request.url} />,
-    ),
+    sheet.collectStyles(<RemixServer context={remixContext} url={request.url} />),
   )
 
   const styles = sheet.getStyleTags()
