@@ -107,7 +107,7 @@ export const Styles = createGlobalStyle`
     overflow-x: hidden;
     font-size: 16px;
     @media screen and (max-width: 960px) {
-      font-size: 10px;
+      font-size: 14px;
     }
   }
   

@@ -27,6 +27,7 @@ const Page = styled.div`
 const Overview = styled.section`
   width: 100%;
   min-height: 500px;
+  padding-bottom: 1rem;
   ${Content} {
     display: flex;
     flex-direction: column;
@@ -55,6 +56,9 @@ const Nickname = styled(DeterminatingText)`
   font-weight: 600;
   background: ${theme.primary('45deg')};
   grid-area: nickname;
+  @media screen and (max-width: 960px) {
+    font-size: 5rem;
+  }
 `
 
 const Fullname = styled(DeterminatingText)`
@@ -62,6 +66,9 @@ const Fullname = styled(DeterminatingText)`
   font-size: 3rem;
   background-color: ${mix(0.5, theme.front, theme.back)};
   grid-area: fullname;
+  @media screen and (max-width: 960px) {
+    font-size: 2rem;
+  }
 `
 
 const GlowBlock = styled.div`

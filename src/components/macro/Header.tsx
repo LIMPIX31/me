@@ -41,6 +41,9 @@ const Logo = styled.img`
 
 const Arrow = styled(BezierArrow)`
   height: 80%;
+  @media screen and (max-width: 960px) {
+    display: none;
+  }
   g {
     stroke: ${theme.primary()};
   }

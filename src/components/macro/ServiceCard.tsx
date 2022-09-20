@@ -4,12 +4,18 @@ import { theme } from 'style/theme'
 import { mix } from 'polished'
 import { DeterminatingText } from 'components/micro/DeterminatingText'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faMinus, faRubleSign, faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCheck,
+  faMinus,
+  faRubleSign,
+  faArrowDown,
+  faQuestion,
+} from '@fortawesome/free-solid-svg-icons'
 import { Button } from 'components/micro/Button'
 
 export interface Ability {
   name: string
-  able: boolean
+  able: boolean | 'confused'
 }
 
 export interface ServiceCardProps {
@@ -18,11 +24,11 @@ export interface ServiceCardProps {
   price: number
   old?: number
   abilities: Ability[]
+  from?: boolean
 }
 
 const ServiceCardStyled = styled.article`
   width: 300px;
-  min-height: 400px;
   background: ${theme.secondary()};
   border-radius: 16px;
   display: flex;
@@ -33,7 +39,6 @@ const ServiceCardStyled = styled.article`
 
 const Content = styled.div`
   width: 100%;
-  min-height: inherit;
   background-color: ${theme.back};
   border-radius: 16px;
   transition: background-color, 0.3s;
@@ -74,8 +79,13 @@ const Ability = styled.li`
   }
 `
 
-const AbilityStatus = styled.span<{ able: boolean }>`
-  color: ${({ able }) => (able ? '#c0ff65' : mix(0.4, theme.front, theme.back))};
+const AbilityStatus = styled.span<{ able: boolean | 'confused' }>`
+  color: ${({ able }) =>
+    able === 'confused'
+      ? '#ffdc58'
+      : able === true
+      ? '#c0ff65'
+      : mix(0.4, theme.front, theme.back)};
   width: 1.6rem;
 `
 
@@ -141,6 +151,7 @@ export const ServiceCard: FC<ServiceCardProps> = ({
   price,
   name,
   old = price,
+  from = false,
 }) => {
   const isProfit = useMemo(() => old > price, [name, old])
 
@@ -153,7 +164,13 @@ export const ServiceCard: FC<ServiceCardProps> = ({
           {abilities.map(v => (
             <Ability key={v.name}>
               <AbilityStatus able={v.able}>
-                {v.able ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faMinus} />}
+                {v.able === 'confused' ? (
+                  <FontAwesomeIcon icon={faQuestion} />
+                ) : v.able ? (
+                  <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faMinus} />
+                )}
               </AbilityStatus>
               <AbilityText>{v.name}</AbilityText>
             </Ability>
@@ -161,13 +178,15 @@ export const ServiceCard: FC<ServiceCardProps> = ({
         </AbilitiesList>
         <Price>
           <PriceValueWrapper profit={isProfit}>
-            <Profit>{isProfit && <FontAwesomeIcon icon={faArrowDown} />}</Profit>
-            <PriceValue>{price}</PriceValue>
+            <PriceValue>
+              {price}
+              {from ? '+' : ''}
+            </PriceValue>
             <FontAwesomeIcon icon={faRubleSign} />
             {old && isProfit && <OldPrice>{old}</OldPrice>}
           </PriceValueWrapper>
         </Price>
-        <Button>Заказать</Button>
+        <Button>Подробнее</Button>
       </Content>
     </ServiceCardStyled>
   )
