@@ -11,7 +11,7 @@ export const App: FC = () => {
       <Routes>
         <Route path={''} element={<CV />} />
         <Route path={'cv'} element={<CV />} />
-        <Route path={'services'} element={<Services />} />
+        {/*<Route path={'services'} element={<Services />} />*/}
       </Routes>
     </>
   )

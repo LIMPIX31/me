@@ -98,7 +98,7 @@ export const Header: FC = () => {
         <Arrow />
         <Nav>
           <NavItem to={'/cv'}>CV</NavItem>
-          <NavItem to={'/services'}>Услуги</NavItem>
+          {/*<NavItem to={'/services'}>Услуги</NavItem>*/}
         </Nav>
       </HeaderContent>
     </StyledHeader>
