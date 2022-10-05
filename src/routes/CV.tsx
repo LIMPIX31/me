@@ -15,7 +15,7 @@ import { useMostUsedPackages } from 'hooks/useMostUsedPackages'
 import { map } from 'utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrown, faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faDiscord, faGithub, faVk } from '@fortawesome/free-brands-svg-icons'
+import { faDiscord, faGithub, faTelegram, faVk } from '@fortawesome/free-brands-svg-icons'
 
 const Page = styled.div`
   width: 100%;
@@ -489,6 +489,10 @@ export const CV: FC = () => {
             <ColoredLink color={'#ffa9ca'} href={'https://vk.ru/limpix31'}>
               <FontAwesomeIcon icon={faVk} />
               <DeterminatingText as={'span'}>Danil Karpenko</DeterminatingText>
+            </ColoredLink>
+            <ColoredLink color={'#a9ffb0'} href={'https://t.me/limpix31'}>
+              <FontAwesomeIcon icon={faTelegram} />
+              <DeterminatingText as={'span'}>@LIMPIX31</DeterminatingText>
             </ColoredLink>
           </Links>
         </Content>
