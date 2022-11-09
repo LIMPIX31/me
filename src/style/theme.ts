@@ -5,12 +5,12 @@ export const theme = {
   front: '#fff8f0',
   primary: (toDirection?: string) =>
     linearGradient({
-      colorStops: ['#f16f26', '#884e9c'],
+      colorStops: ['#5926f1', '#00ffa6'],
       toDirection,
     }),
   secondary: (toDirection?: string) =>
     linearGradient({
-      colorStops: ['#8e41ac', '#f42e2e', '#fac059'],
+      colorStops: ['#5926f1', '#00ffa6'],
       toDirection: toDirection ?? '45deg',
     }),
   size: {

@@ -10,7 +10,7 @@ const AgeStyled = styled.div`
   left: 0%;
   translate: 0 -50%;
   font-weight: 900;
-  font-family: Cartographer, sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   background: ${theme.front};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

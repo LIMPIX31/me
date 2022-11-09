@@ -72,7 +72,7 @@ const shade = (level?: number | 'low' | 'medium' | 'high') =>
     : ''
 
 export const StyledText = styled.div<DeterminatingTextProps>`
-  font-family: Cartographer, sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   background: ${theme.front};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

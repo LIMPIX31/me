@@ -8,7 +8,6 @@ import { VerticalBrace } from 'components/micro/VerticalBrace'
 import ts_logo from 'assets/images/ts-logo-round-256.svg'
 import kotlin_logo from 'assets/images/kotlin_logo.svg'
 import rust_logo from 'assets/images/rust_logo.png'
-import back1 from 'assets/images/back1.svg'
 import photo from 'assets/images/photo.png'
 import { FC, useMemo } from 'react'
 import { useMostUsedPackages } from 'hooks/useMostUsedPackages'
@@ -19,8 +18,6 @@ import { faDiscord, faGithub, faTelegram, faVk } from '@fortawesome/free-brands-
 
 const Page = styled.div`
   width: 100%;
-  background: url(${back1}) center 0;
-  background-size: 120rem;
   padding-top: 10rem;
 `
 
@@ -314,7 +311,7 @@ const StackList = styled.ul`
       background: ${theme.secondary('45deg')};
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 30px #f42e2e);
+      filter: drop-shadow(0 0 30px #00ffa6);
     }
   }
 `

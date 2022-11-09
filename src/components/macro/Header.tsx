@@ -62,7 +62,7 @@ const NavItem = styled(NavLink)`
   justify-content: center;
   font-size: 1rem;
   line-height: 1.5rem;
-  font-family: Cartographer, sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   font-weight: 300;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
